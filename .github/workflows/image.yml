@@ -34,7 +34,7 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
-          tags: hferreira/rpi-docker-openvpn:latest
+          tags: hferreira/grafana-image-renderer:latest
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
