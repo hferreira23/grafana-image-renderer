@@ -1,4 +1,4 @@
-FROM node:alpine3.12 AS base
+FROM node:alpine AS base
 
 ENV CHROME_BIN="/usr/bin/chromium-browser"
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
