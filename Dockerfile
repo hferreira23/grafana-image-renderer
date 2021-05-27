@@ -1,4 +1,4 @@
-FROM node:12-alpine AS base
+FROM node:14-alpine AS base
 
 ENV CHROME_BIN="/usr/bin/chromium-browser"
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
@@ -13,14 +13,15 @@ RUN \
   apk --no-cache upgrade && \
   apk add --no-cache udev ttf-opensans unifont chromium ca-certificates dumb-init bash tzdata pango-dev && \
   rm -rf /tmp/*
-
-#RUN apk add --no-cache libc6-compat python alpine-sdk
-#RUN npm install -g node-gyp
-#RUN npm install --build-from-source=grpc
-
+ 
 FROM base as build
 
-COPY . ./
+RUN apk add git && \
+    git clone --depth 1 https://github.com/grafana/grafana-image-renderer.git && \
+    cd grafana-image-renderer/ && \
+    cd .. && \
+    mv grafana-image-renderer/* /usr/src/app/ && \
+    rm -rf grafana-image-renderer
 
 RUN yarn install --pure-lockfile
 RUN yarn run build
